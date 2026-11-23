@@ -1,0 +1,57 @@
+# ME3330: Mechanical Vibrations
+
+**Prerequisites** 
+ME 2120 (System Dynamics), or Senior/Graduate standing in engineering or physical sciences.
+
+**Format**
+3 hours/week (Integrated Lecture, Computational Workshops, and Bench-Top Demonstrations)
+
+## Description
+Analysis, measurement, and control of mechanical vibrations in engineering structures and machinery. Topics include single-degree-of-freedom (SDOF) and multi-degree-of-freedom (MDOF) systems, free and forced harmonic/transient responses, modal analysis, continuous systems, rotating machinery dynamics, random vibrations, and experimental vibration measurement. Emphasis is placed on physical intuition, rigorous formulation (D'Alembert's Principle and Lagrange's Equations), and bridging analytical models with computational models and bench-top experiments.
+
+## Course Learning Outcomes (CLOs)
+By the end of this course, students will be able to:
+1. **Formulate** governing equations of motion for translational, rotational, and coupled mechanical systems using D'Alembert's Principle, energy methods, and Lagrange's Equations.
+2. **Analyze** free, harmonic, transient, and random vibration responses of SDOF and MDOF systems in both the time and frequency domains.
+3. **Evaluate** natural frequencies, mode shapes, and critical speeds of discrete, continuous, and rotating systems using analytical and matrix-based numerical methods.
+4. **Design** passive vibration isolation and absorption systems (e.g., tuned mass dampers) to meet engineering performance criteria.
+5. **Measure and validate** modal parameters ($\omega_n$, $\zeta$, FRFs) from experimental time-series data using Python and signal-processing tools (FFT, logarithmic decrement).
+
+## Course Philosophy
+Rather than treating analytical theory and laboratory measurement as separate courses, ME 3330 integrates focused lab modules directly into the lecture sequence:
+1. **Computational Modeling (Python):** Comparing exact nonlinear D'Alembert EOMs against small-angle linearized models using `scipy.integrate.solve_ivp.`
+2. **System Identification:** Instrumenting a simple cantilevered beam with a MEMS accelerometer to extract $\omega_n$ and $\zeta$ via FFT and logarithmic decrement.
+3. **Tuned Mass Damper (TMD) Optimization:** Designing and simulating a 2-DOF vibration absorber to suppress a target resonant peak under harmonic excitation.
+4. **Experimental Modal Analysis:** Measuring multi-mode FRFs of a beam or plate using an impact hammer and accelerometer, then validating the mode shapes against analytical/numerical predictions.
+
+## Textbooks & Software
+1. **Primary Textbook:** S. S. Rao, Mechanical Vibrations, 6th Edition, Pearson (2017).
+2. **Supplemental Reference:** R. R. Craig Jr. & A. J. Kurdila, Fundamentals of Structural Dynamics, 2nd Edition, Wiley (2006). (Used particularly for matrix structural dynamics, modal analysis, and experimental/computational formulations.)
+3. **Computational Environment**: Python 3 (numpy, scipy, matplotlib) via Jupyter/Quarto.
+
+## Grading and Assessment
+| Component | Weight | Description |
+| :--- | :---: | :--- |
+| **Homework Problem Sets** | 25% | Weekly sets combining analytical derivations with conceptual/physical diagnostic questions. |
+| **Practical Labs** | 25% | 4 hands-on modules pairing Python ODE/FFT analysis with bench-top structural measurements. |
+| **Exams (2)** | 30% | In-class exams (15% each) assessing formulation, physical intuition, and analytical mastery. |
+| **Final Project** | 20% | Capstone vibration analysis of a real mechanical assembly|
+
+## Course Schedule (15-week)
+| Week | Module / Topic | Readings | Lab / Milestone |
+| :---: | :--- | :--- | :--- |
+| **1** | **Introduction to Vibrations:** Classification of vibrations, harmonic motion, complex notation, equivalent springs & dampers. | Rao Ch. 1; Craig Ch. 1 | Python environment setup |
+| **2** | **SDOF Formulation via D'Alembert's Principle** *(Sample Lecture)*: Dynamic equilibrium, constraint elimination, linearization, energy methods. | Rao Ch. 2.1–2.4; Craig Ch. 2 | **Lab 1:** Linear vs. Nonlinear SDOF (Python) |
+| **3** | **Free Vibration of SDOF Systems:** Undamped and viscously damped regimes, logarithmic decrement, Coulomb & structural damping. | Rao Ch. 2.5–2.9; Craig Ch. 3 | HW 1 & 2 |
+| **4** | **Harmonically Excited SDOF Systems:** Resonance, phase lag, Frequency Response Functions (FRF), rotating unbalance, base excitation. | Rao Ch. 3.1–3.7; Craig Ch. 4 | — |
+| **5** | **General Periodic & Transient Excitation:** Fourier series, impulse response, Duhamel's convolution integral, response spectra. | Rao Ch. 4.1–4.6; Craig Ch. 5–6 | **Lab 2:** Cantilever Beam Pluck Test & FFT |
+| **6** | **Review & Midterm Exam 1:** Comprehensive synthesis of SDOF formulation, damping, and forced response. | — | **Midterm Exam 1** |
+| **7** | **Two-Degree-of-Freedom (2-DOF) Systems:** Matrix EOMs, eigenvalue problem, natural frequencies, mode shapes, coordinate coupling. | Rao Ch. 5.1–5.6; Craig Ch. 10 | — |
+| **8** | **Vibration Control & Absorbers:** Passive vibration isolation, transmissibility, undamped & damped Tuned Mass Dampers (TMDs). | Rao Ch. 9.1–9.11 | **Lab 3:** 2-DOF Tuned Mass Damper Design |
+| **9** | **Multi-Degree-of-Freedom (MDOF) Systems:** Influence coefficients, generalized coordinates, Lagrange's Equations, mass & stiffness matrices. | Rao Ch. 6.1–6.8; Craig Ch. 8 | — |
+| **10** | **Modal Analysis of MDOF Systems:** Orthogonality of modes, modal expansion/superposition, proportional (Rayleigh) damping. | Rao Ch. 6.9–6.14; Craig Ch. 11 | — |
+| **11** | **Continuous Systems:** Wave equation for strings/bars, torsional vibration of shafts, Euler-Bernoulli beam bending modes. | Rao Ch. 8.1–8.6; Craig Ch. 12 | **Midterm Exam 2** |
+| **12** | **Rotating Machinery Dynamics:** Jeffcott rotor model, whirling of shafts, critical speeds, gyroscopic effects, rotor balancing. | Rao Ch. 9.4; Supplemental Notes | — |
+| **13** | **Random Vibrations:** Probability distributions, autocorrelation, Power Spectral Density (PSD), SDOF response to random excitation. | Rao Ch. 14.1–14.6 | — |
+| **14** | **Experimental Modal Analysis (EMA):** Accelerometers, impact hammers, modal shakers, windowing, coherence, and FRF estimation. | Rao Ch. 10; Craig Ch. 19 | **Lab 4:** Impact Hammer Modal Testing |
+| **15** | **Active Vibration Control & Capstone Synthesis:** Feedback control overview (link to ME 3320) and student project presentations. | — | **Final Project Presentations** |

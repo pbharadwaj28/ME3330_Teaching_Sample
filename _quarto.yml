@@ -1,0 +1,22 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "ME 3330: Teaching Sample"
+  navbar:
+    left:
+      - href: 00_Syllabus.qmd
+        text: 1. Syllabus
+      - href: 01_notes.qmd
+        text: 2. Theory
+      - href: 02_lab.qmd
+        text: 3. Lab
+      - href: 03_assignment.qmd
+        text: 4. Formative Assessment
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: false

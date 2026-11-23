@@ -1,0 +1,95 @@
+---
+title: "1. SDOF Systems: Theory & Simulation"
+format: html
+jupyter: python3
+---
+
+## Motivation (5 minutes)
+Every vibration analysis—whether we are predicting the resonance of an aircraft wing, isolating a sensitive optical table, or sizing a vehicle suspension—begins with a single, critical step: deriving the governing Equation of Motion (EOM).
+
+Modern computational tools can integrate an ODE in milliseconds, but they cannot tell you whether your physical model is right. If you miss a geometric coupling term, mis-sign a restoring force, or drop an inertial contribution, the solver will give you a highly precise wrong answer. Today, we focus on D'Alembert's Principle, a formulation method that turns complex dynamics into intuitive, statics-style equilibrium problems.
+
+## From Newton's Second Law to Dynamic Equilibrium (15 Minutes)
+
+For a rigid body of mass $m$ and mass moment of inertia $I_G$ about its center of mass $G$, Newtonian mechanics tells us that net external forces and moments produce linear and angular accelerations:
+
+$$
+\sum \mathbf{F}_{\text{ext}} = m\mathbf{a}_G
+$$
+$$
+\sum \mathbf{M}_{G,\text{ext}} = I_G\boldsymbol{\alpha}
+$$
+
+In 1743, Jean le Rond d'Alembert proposed a deceptively simple algebraic rearrangement: move the right-hand side to the left.
+
+$$
+\sum \mathbf{F}_{\text{ext}} + \underbrace{(-m\mathbf{a}_G)}_{\mathbf{F}_I} = \mathbf{0}
+$$
+
+$$
+\sum \mathbf{M}_{G,\text{ext}} + \underbrace{(-I_G\boldsymbol{\alpha})}_{\mathbf{M}_I} = \mathbf{0}
+$$
+
+Here, we define two fictitious—yet mathematically exact—quantities:
+1. Inertial Force: $\mathbf{F}_I = -m\mathbf{a}_G$, acting at the center of mass $G$ in the direction opposite to the assumed positive acceleration $\mathbf{a}_G$.
+2. Inertial Couple: $\mathbf{M}_I = -I_G\boldsymbol{\alpha}$, acting in the direction opposite to the assumed positive angular acceleration $\boldsymbol{\alpha}$.
+
+With these two terms added to our Free-Body Diagram (FBD), the moving system is now in dynamic equilibrium. Every tool you mastered in Statics—summing forces, taking moments about any convenient point, and eliminating unknown reaction forces—applies directly.
+
+## Example
+Consider a uniform rigid bar of mass $m$ and length $L$, pinned at its left end $O$ (where $I_O = \frac{1}{3}mL^2$). At static equilibrium, the bar rests horizontally, supported by a linear spring of stiffness $k$ attached at distance $a$ from $O$, and a viscous damper of coefficient $c$ attached at distance $b$ from $O$. A vertical harmonic force $F(t) = F_0 \cos(\omega t)$ is applied downward at the right tip ($x = L$).
+
+![Schematic of the pivoted rigid bar with spring, damper, and harmonic tip force.](images/pivoted_bar.png){#fig-pivoted-bar width="80%"}
+
+
+### Step 1: Static Equilibrium Check
+Before disturbing the bar, its weight $mg$ (acting at $L/2$) compresses the spring by a static deflection $\delta_{\text{st}}$. Taking static moments about $O$:$$mg\left(\frac{L}{2}\right) - (k\delta_{\text{st}})a = 0 \implies k\delta_{\text{st}}a = mg\frac{L}{2}$$
+When we measure $\theta$ from this horizontal static equilibrium position, the constant gravity moment and the static spring preload cancel out identically (for small angles). *Always verify this explicitly before dropping gravity!*
+
+### Step 2: Kinematics
+Assume a positive clockwise rotation $\theta$ (with angular velocity $\dot{\theta}$ and angular acceleration $\ddot{\theta}$):
+
+1. Spring vertical displacement: $y_a = a\sin\theta$
+2. Damper vertical velocity: $\dot{y}_b = \frac{d}{dt}(b\sin\theta) = b\dot{\theta}\cos\theta$
+3. Horizontal moment arms (perpendicular distances from $O$ to vertical forces): $a\cos\theta$, $b\cos\theta$, and $L\cos\theta$.
+
+### Step 3: D'Alembert Dynamic Equilibrium about Pivot $O$
+On our dynamic FBD, we draw:
+1. The spring restoring force $F_s = k y_a$ pushing upward (opposing clockwise rotation)
+2. The damper force $F_d = c \dot{y}_b$ pushing upward (opposing clockwise velocity).
+3. The external tip force $F(t)$ pushing downward (aiding clockwise rotation).
+4. The inertial couple $M_I = I_O\ddot{\theta}$ acting counterclockwise (opposing positive clockwise $\ddot{\theta}$).
+Summing moments about $O$ (taking clockwise as positive):
+
+$$
+\sum M_O = -I_O\ddot{\theta} - (c\dot{y}_b)(b\cos\theta) - (k y_a)(a\cos\theta) + F(t)(L\cos\theta) = 0
+$$
+
+### Step 4: Exact Nonlinear Equation of Motion
+Substituting $y_a = a\sin\theta$ and $\dot{y}_b = b\dot{\theta}\cos\theta$, and moving the inertial, damping, and stiffness terms to the left-hand side:
+
+$$
+I_O\ddot{\theta} + c b^2 \cos^2(\theta)\dot{\theta} + k a^2 \sin(\theta)\cos(\theta) = F_0 L \cos(\theta)\cos(\omega t)
+$$
+
+Notice that even though our spring and damper are linear components, the geometry of rotation introduces nonlinear terms ($\cos^2\theta$, $\sin\theta\cos\theta$).
+
+### Step 5: Small-Angle Linearization & Canonical SDOF Form
+For small oscillations about equilibrium ($\theta \ll 1\text{ rad}$), we apply $\sin\theta \approx \theta$ and $\cos\theta \approx 1$:
+
+$$
+\underbrace{\left(\frac{1}{3}mL^2\right)}_{I_{\text{eq}}}\ddot{\theta} + \underbrace{\left(cb^2\right)}_{c_{\text{eq}}}\dot{\theta} + \underbrace{\left(ka^2\right)}_{k_{\text{eq}}}\theta = F_0 L \cos(\omega t)
+$$
+
+### Step 6: Physical Intuition & Design Takeaways
+By reducing the assembly to canonical SDOF form ($I_{\text{eq}}\ddot{\theta} + c_{\text{eq}}\dot{\theta} + k_{\text{eq}}\theta = M_{\text{eq}}(t)$), we can read off the system's physics immediately:
+
+1. Undamped Natural Frequency:$$\omega_n = \sqrt{\frac{k_{\text{eq}}}{I_{\text{eq}}}} = \sqrt{\frac{3ka^2}{mL^2}} = \frac{a}{L}\sqrt{\frac{3k}{m}}$$
+2. Design Lever Arm: Moving the spring closer to the tip ($a \to L$) increases the effective stiffness quadratically ($k_{\text{eq}} \propto a^2$) and scales the natural frequency linearly with $a$. Similarly, moving the damper outward increases effective damping as $b^2$.
+
+## In-Class Concept Check & Bridge to Lab (10 Minutes)
+
+1. Sign-Check Intuition: What would happen to our static equilibrium cancellation if the bar were oriented vertically (like an inverted pendulum) instead of horizontally? (Answer: Gravity no longer has a constant horizontal lever arm; it introduces a destabilizing $-mg\frac{L}{2}\sin\theta$ term that directly reduces $k_{\text{eq}}$.)
+2. Limits of Linearization: At what initial angle $\theta_0$ do you think our small-angle assumption ($\sin\theta \approx \theta, \cos\theta \approx 1$) starts to noticeably fail—$5^\circ$? $20^\circ$? $45^\circ$?
+
+Rather than guessing where linearization breaks down, in this week's Python lab we will integrate both the exact nonlinear EOM and the linearized EOM side-by-side to see exactly how large-angle geometry shifts the system's natural frequency and decay rate.

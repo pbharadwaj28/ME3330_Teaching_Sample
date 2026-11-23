@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1. SDOF Systems: Theory &amp; Simulation – ME 3330: Teaching Sample</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-48eea8e06ff06eb442a2daacfce5ac08.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">ME 3330: Teaching Sample</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./00_Syllabus.html"> 
+<span class="menu-text">1. Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./01_notes.html" aria-current="page"> 
+<span class="menu-text">2. Theory</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./02_lab.html"> 
+<span class="menu-text">3. Lab</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./03_assignment.html"> 
+<span class="menu-text">4. Formative Assessment</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#motivation-5-minutes" id="toc-motivation-5-minutes" class="nav-link active" data-scroll-target="#motivation-5-minutes">Motivation (5 minutes)</a></li>
+  <li><a href="#from-newtons-second-law-to-dynamic-equilibrium-15-minutes" id="toc-from-newtons-second-law-to-dynamic-equilibrium-15-minutes" class="nav-link" data-scroll-target="#from-newtons-second-law-to-dynamic-equilibrium-15-minutes">From Newton’s Second Law to Dynamic Equilibrium (15 Minutes)</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a>
+  <ul class="collapse">
+  <li><a href="#step-1-static-equilibrium-check" id="toc-step-1-static-equilibrium-check" class="nav-link" data-scroll-target="#step-1-static-equilibrium-check">Step 1: Static Equilibrium Check</a></li>
+  <li><a href="#step-2-kinematics" id="toc-step-2-kinematics" class="nav-link" data-scroll-target="#step-2-kinematics">Step 2: Kinematics</a></li>
+  <li><a href="#step-3-dalembert-dynamic-equilibrium-about-pivot-o" id="toc-step-3-dalembert-dynamic-equilibrium-about-pivot-o" class="nav-link" data-scroll-target="#step-3-dalembert-dynamic-equilibrium-about-pivot-o">Step 3: D’Alembert Dynamic Equilibrium about Pivot <span class="math inline">\(O\)</span></a></li>
+  <li><a href="#step-4-exact-nonlinear-equation-of-motion" id="toc-step-4-exact-nonlinear-equation-of-motion" class="nav-link" data-scroll-target="#step-4-exact-nonlinear-equation-of-motion">Step 4: Exact Nonlinear Equation of Motion</a></li>
+  <li><a href="#step-5-small-angle-linearization-canonical-sdof-form" id="toc-step-5-small-angle-linearization-canonical-sdof-form" class="nav-link" data-scroll-target="#step-5-small-angle-linearization-canonical-sdof-form">Step 5: Small-Angle Linearization &amp; Canonical SDOF Form</a></li>
+  <li><a href="#step-6-physical-intuition-design-takeaways" id="toc-step-6-physical-intuition-design-takeaways" class="nav-link" data-scroll-target="#step-6-physical-intuition-design-takeaways">Step 6: Physical Intuition &amp; Design Takeaways</a></li>
+  </ul></li>
+  <li><a href="#in-class-concept-check-bridge-to-lab-10-minutes" id="toc-in-class-concept-check-bridge-to-lab-10-minutes" class="nav-link" data-scroll-target="#in-class-concept-check-bridge-to-lab-10-minutes">In-Class Concept Check &amp; Bridge to Lab (10 Minutes)</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">1. SDOF Systems: Theory &amp; Simulation</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="motivation-5-minutes" class="level2">
+<h2 class="anchored" data-anchor-id="motivation-5-minutes">Motivation (5 minutes)</h2>
+<p>Every vibration analysis—whether we are predicting the resonance of an aircraft wing, isolating a sensitive optical table, or sizing a vehicle suspension—begins with a single, critical step: deriving the governing Equation of Motion (EOM).</p>
+<p>Modern computational tools can integrate an ODE in milliseconds, but they cannot tell you whether your physical model is right. If you miss a geometric coupling term, mis-sign a restoring force, or drop an inertial contribution, the solver will give you a highly precise wrong answer. Today, we focus on D’Alembert’s Principle, a formulation method that turns complex dynamics into intuitive, statics-style equilibrium problems.</p>
+</section>
+<section id="from-newtons-second-law-to-dynamic-equilibrium-15-minutes" class="level2">
+<h2 class="anchored" data-anchor-id="from-newtons-second-law-to-dynamic-equilibrium-15-minutes">From Newton’s Second Law to Dynamic Equilibrium (15 Minutes)</h2>
+<p>For a rigid body of mass <span class="math inline">\(m\)</span> and mass moment of inertia <span class="math inline">\(I_G\)</span> about its center of mass <span class="math inline">\(G\)</span>, Newtonian mechanics tells us that net external forces and moments produce linear and angular accelerations:</p>
+<p><span class="math display">\[
+\sum \mathbf{F}_{\text{ext}} = m\mathbf{a}_G
+\]</span> <span class="math display">\[
+\sum \mathbf{M}_{G,\text{ext}} = I_G\boldsymbol{\alpha}
+\]</span></p>
+<p>In 1743, Jean le Rond d’Alembert proposed a deceptively simple algebraic rearrangement: move the right-hand side to the left.</p>
+<p><span class="math display">\[
+\sum \mathbf{F}_{\text{ext}} + \underbrace{(-m\mathbf{a}_G)}_{\mathbf{F}_I} = \mathbf{0}
+\]</span></p>
+<p><span class="math display">\[
+\sum \mathbf{M}_{G,\text{ext}} + \underbrace{(-I_G\boldsymbol{\alpha})}_{\mathbf{M}_I} = \mathbf{0}
+\]</span></p>
+<p>Here, we define two fictitious—yet mathematically exact—quantities: 1. Inertial Force: <span class="math inline">\(\mathbf{F}_I = -m\mathbf{a}_G\)</span>, acting at the center of mass <span class="math inline">\(G\)</span> in the direction opposite to the assumed positive acceleration <span class="math inline">\(\mathbf{a}_G\)</span>. 2. Inertial Couple: <span class="math inline">\(\mathbf{M}_I = -I_G\boldsymbol{\alpha}\)</span>, acting in the direction opposite to the assumed positive angular acceleration <span class="math inline">\(\boldsymbol{\alpha}\)</span>.</p>
+<p>With these two terms added to our Free-Body Diagram (FBD), the moving system is now in dynamic equilibrium. Every tool you mastered in Statics—summing forces, taking moments about any convenient point, and eliminating unknown reaction forces—applies directly.</p>
+</section>
+<section id="example" class="level2">
+<h2 class="anchored" data-anchor-id="example">Example</h2>
+<p>Consider a uniform rigid bar of mass <span class="math inline">\(m\)</span> and length <span class="math inline">\(L\)</span>, pinned at its left end <span class="math inline">\(O\)</span> (where <span class="math inline">\(I_O = \frac{1}{3}mL^2\)</span>). At static equilibrium, the bar rests horizontally, supported by a linear spring of stiffness <span class="math inline">\(k\)</span> attached at distance <span class="math inline">\(a\)</span> from <span class="math inline">\(O\)</span>, and a viscous damper of coefficient <span class="math inline">\(c\)</span> attached at distance <span class="math inline">\(b\)</span> from <span class="math inline">\(O\)</span>. A vertical harmonic force <span class="math inline">\(F(t) = F_0 \cos(\omega t)\)</span> is applied downward at the right tip (<span class="math inline">\(x = L\)</span>).</p>
+<div id="fig-pivoted-bar" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pivoted-bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/pivoted_bar.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pivoted-bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Schematic of the pivoted rigid bar with spring, damper, and harmonic tip force.
+</figcaption>
+</figure>
+</div>
+<section id="step-1-static-equilibrium-check" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-static-equilibrium-check">Step 1: Static Equilibrium Check</h3>
+<p>Before disturbing the bar, its weight <span class="math inline">\(mg\)</span> (acting at <span class="math inline">\(L/2\)</span>) compresses the spring by a static deflection <span class="math inline">\(\delta_{\text{st}}\)</span>. Taking static moments about <span class="math inline">\(O\)</span>:<span class="math display">\[mg\left(\frac{L}{2}\right) - (k\delta_{\text{st}})a = 0 \implies k\delta_{\text{st}}a = mg\frac{L}{2}\]</span> When we measure <span class="math inline">\(\theta\)</span> from this horizontal static equilibrium position, the constant gravity moment and the static spring preload cancel out identically (for small angles). <em>Always verify this explicitly before dropping gravity!</em></p>
+</section>
+<section id="step-2-kinematics" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-kinematics">Step 2: Kinematics</h3>
+<p>Assume a positive clockwise rotation <span class="math inline">\(\theta\)</span> (with angular velocity <span class="math inline">\(\dot{\theta}\)</span> and angular acceleration <span class="math inline">\(\ddot{\theta}\)</span>):</p>
+<ol type="1">
+<li>Spring vertical displacement: <span class="math inline">\(y_a = a\sin\theta\)</span></li>
+<li>Damper vertical velocity: <span class="math inline">\(\dot{y}_b = \frac{d}{dt}(b\sin\theta) = b\dot{\theta}\cos\theta\)</span></li>
+<li>Horizontal moment arms (perpendicular distances from <span class="math inline">\(O\)</span> to vertical forces): <span class="math inline">\(a\cos\theta\)</span>, <span class="math inline">\(b\cos\theta\)</span>, and <span class="math inline">\(L\cos\theta\)</span>.</li>
+</ol>
+</section>
+<section id="step-3-dalembert-dynamic-equilibrium-about-pivot-o" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-dalembert-dynamic-equilibrium-about-pivot-o">Step 3: D’Alembert Dynamic Equilibrium about Pivot <span class="math inline">\(O\)</span></h3>
+<p>On our dynamic FBD, we draw: 1. The spring restoring force <span class="math inline">\(F_s = k y_a\)</span> pushing upward (opposing clockwise rotation) 2. The damper force <span class="math inline">\(F_d = c \dot{y}_b\)</span> pushing upward (opposing clockwise velocity). 3. The external tip force <span class="math inline">\(F(t)\)</span> pushing downward (aiding clockwise rotation). 4. The inertial couple <span class="math inline">\(M_I = I_O\ddot{\theta}\)</span> acting counterclockwise (opposing positive clockwise <span class="math inline">\(\ddot{\theta}\)</span>). Summing moments about <span class="math inline">\(O\)</span> (taking clockwise as positive):</p>
+<p><span class="math display">\[
+\sum M_O = -I_O\ddot{\theta} - (c\dot{y}_b)(b\cos\theta) - (k y_a)(a\cos\theta) + F(t)(L\cos\theta) = 0
+\]</span></p>
+</section>
+<section id="step-4-exact-nonlinear-equation-of-motion" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-exact-nonlinear-equation-of-motion">Step 4: Exact Nonlinear Equation of Motion</h3>
+<p>Substituting <span class="math inline">\(y_a = a\sin\theta\)</span> and <span class="math inline">\(\dot{y}_b = b\dot{\theta}\cos\theta\)</span>, and moving the inertial, damping, and stiffness terms to the left-hand side:</p>
+<p><span class="math display">\[
+I_O\ddot{\theta} + c b^2 \cos^2(\theta)\dot{\theta} + k a^2 \sin(\theta)\cos(\theta) = F_0 L \cos(\theta)\cos(\omega t)
+\]</span></p>
+<p>Notice that even though our spring and damper are linear components, the geometry of rotation introduces nonlinear terms (<span class="math inline">\(\cos^2\theta\)</span>, <span class="math inline">\(\sin\theta\cos\theta\)</span>).</p>
+</section>
+<section id="step-5-small-angle-linearization-canonical-sdof-form" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-small-angle-linearization-canonical-sdof-form">Step 5: Small-Angle Linearization &amp; Canonical SDOF Form</h3>
+<p>For small oscillations about equilibrium (<span class="math inline">\(\theta \ll 1\text{ rad}\)</span>), we apply <span class="math inline">\(\sin\theta \approx \theta\)</span> and <span class="math inline">\(\cos\theta \approx 1\)</span>:</p>
+<p><span class="math display">\[
+\underbrace{\left(\frac{1}{3}mL^2\right)}_{I_{\text{eq}}}\ddot{\theta} + \underbrace{\left(cb^2\right)}_{c_{\text{eq}}}\dot{\theta} + \underbrace{\left(ka^2\right)}_{k_{\text{eq}}}\theta = F_0 L \cos(\omega t)
+\]</span></p>
+</section>
+<section id="step-6-physical-intuition-design-takeaways" class="level3">
+<h3 class="anchored" data-anchor-id="step-6-physical-intuition-design-takeaways">Step 6: Physical Intuition &amp; Design Takeaways</h3>
+<p>By reducing the assembly to canonical SDOF form (<span class="math inline">\(I_{\text{eq}}\ddot{\theta} + c_{\text{eq}}\dot{\theta} + k_{\text{eq}}\theta = M_{\text{eq}}(t)\)</span>), we can read off the system’s physics immediately:</p>
+<ol type="1">
+<li>Undamped Natural Frequency:<span class="math display">\[\omega_n = \sqrt{\frac{k_{\text{eq}}}{I_{\text{eq}}}} = \sqrt{\frac{3ka^2}{mL^2}} = \frac{a}{L}\sqrt{\frac{3k}{m}}\]</span></li>
+<li>Design Lever Arm: Moving the spring closer to the tip (<span class="math inline">\(a \to L\)</span>) increases the effective stiffness quadratically (<span class="math inline">\(k_{\text{eq}} \propto a^2\)</span>) and scales the natural frequency linearly with <span class="math inline">\(a\)</span>. Similarly, moving the damper outward increases effective damping as <span class="math inline">\(b^2\)</span>.</li>
+</ol>
+</section>
+</section>
+<section id="in-class-concept-check-bridge-to-lab-10-minutes" class="level2">
+<h2 class="anchored" data-anchor-id="in-class-concept-check-bridge-to-lab-10-minutes">In-Class Concept Check &amp; Bridge to Lab (10 Minutes)</h2>
+<ol type="1">
+<li>Sign-Check Intuition: What would happen to our static equilibrium cancellation if the bar were oriented vertically (like an inverted pendulum) instead of horizontally? (Answer: Gravity no longer has a constant horizontal lever arm; it introduces a destabilizing <span class="math inline">\(-mg\frac{L}{2}\sin\theta\)</span> term that directly reduces <span class="math inline">\(k_{\text{eq}}\)</span>.)</li>
+<li>Limits of Linearization: At what initial angle <span class="math inline">\(\theta_0\)</span> do you think our small-angle assumption (<span class="math inline">\(\sin\theta \approx \theta, \cos\theta \approx 1\)</span>) starts to noticeably fail—<span class="math inline">\(5^\circ\)</span>? <span class="math inline">\(20^\circ\)</span>? <span class="math inline">\(45^\circ\)</span>?</li>
+</ol>
+<p>Rather than guessing where linearization breaks down, in this week’s Python lab we will integrate both the exact nonlinear EOM and the linearized EOM side-by-side to see exactly how large-angle geometry shifts the system’s natural frequency and decay rate.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
