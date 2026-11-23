@@ -213,7 +213,11 @@ window.Quarto = {
 <p><span class="math display">\[
 \sum \mathbf{M}_{G,\text{ext}} + \underbrace{(-I_G\boldsymbol{\alpha})}_{\mathbf{M}_I} = \mathbf{0}
 \]</span></p>
-<p>Here, we define two fictitious—yet mathematically exact—quantities: 1. Inertial Force: <span class="math inline">\(\mathbf{F}_I = -m\mathbf{a}_G\)</span>, acting at the center of mass <span class="math inline">\(G\)</span> in the direction opposite to the assumed positive acceleration <span class="math inline">\(\mathbf{a}_G\)</span>. 2. Inertial Couple: <span class="math inline">\(\mathbf{M}_I = -I_G\boldsymbol{\alpha}\)</span>, acting in the direction opposite to the assumed positive angular acceleration <span class="math inline">\(\boldsymbol{\alpha}\)</span>.</p>
+<p>Here, we define two fictitious—yet mathematically exact—quantities:</p>
+<ol type="1">
+<li>Inertial Force: <span class="math inline">\(\mathbf{F}_I = -m\mathbf{a}_G\)</span>, acting at the center of mass <span class="math inline">\(G\)</span> in the direction opposite to the assumed positive acceleration <span class="math inline">\(\mathbf{a}_G\)</span>.</li>
+<li>Inertial Couple: <span class="math inline">\(\mathbf{M}_I = -I_G\boldsymbol{\alpha}\)</span>, acting in the direction opposite to the assumed positive angular acceleration <span class="math inline">\(\boldsymbol{\alpha}\)</span>.</li>
+</ol>
 <p>With these two terms added to our Free-Body Diagram (FBD), the moving system is now in dynamic equilibrium. Every tool you mastered in Statics—summing forces, taking moments about any convenient point, and eliminating unknown reaction forces—applies directly.</p>
 </section>
 <section id="example" class="level2">
@@ -244,7 +248,13 @@ Figure&nbsp;1: Schematic of the pivoted rigid bar with spring, damper, and harmo
 </section>
 <section id="step-3-dalembert-dynamic-equilibrium-about-pivot-o" class="level3">
 <h3 class="anchored" data-anchor-id="step-3-dalembert-dynamic-equilibrium-about-pivot-o">Step 3: D’Alembert Dynamic Equilibrium about Pivot <span class="math inline">\(O\)</span></h3>
-<p>On our dynamic FBD, we draw: 1. The spring restoring force <span class="math inline">\(F_s = k y_a\)</span> pushing upward (opposing clockwise rotation) 2. The damper force <span class="math inline">\(F_d = c \dot{y}_b\)</span> pushing upward (opposing clockwise velocity). 3. The external tip force <span class="math inline">\(F(t)\)</span> pushing downward (aiding clockwise rotation). 4. The inertial couple <span class="math inline">\(M_I = I_O\ddot{\theta}\)</span> acting counterclockwise (opposing positive clockwise <span class="math inline">\(\ddot{\theta}\)</span>). Summing moments about <span class="math inline">\(O\)</span> (taking clockwise as positive):</p>
+<p>On our dynamic FBD, we draw:</p>
+<ol type="1">
+<li>The spring restoring force <span class="math inline">\(F_s = k y_a\)</span> pushing upward (opposing clockwise rotation)</li>
+<li>The damper force <span class="math inline">\(F_d = c \dot{y}_b\)</span> pushing upward (opposing clockwise velocity).</li>
+<li>The external tip force <span class="math inline">\(F(t)\)</span> pushing downward (aiding clockwise rotation).</li>
+<li>The inertial couple <span class="math inline">\(M_I = I_O\ddot{\theta}\)</span> acting counterclockwise (opposing positive clockwise <span class="math inline">\(\ddot{\theta}\)</span>). Summing moments about <span class="math inline">\(O\)</span> (taking clockwise as positive):</li>
+</ol>
 <p><span class="math display">\[
 \sum M_O = -I_O\ddot{\theta} - (c\dot{y}_b)(b\cos\theta) - (k y_a)(a\cos\theta) + F(t)(L\cos\theta) = 0
 \]</span></p>

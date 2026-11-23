@@ -11,6 +11,7 @@ Analysis, measurement, and control of mechanical vibrations in engineering struc
 
 ## Course Learning Outcomes (CLOs)
 By the end of this course, students will be able to:
+
 1. **Formulate** governing equations of motion for translational, rotational, and coupled mechanical systems using D'Alembert's Principle, energy methods, and Lagrange's Equations.
 2. **Analyze** free, harmonic, transient, and random vibration responses of SDOF and MDOF systems in both the time and frequency domains.
 3. **Evaluate** natural frequencies, mode shapes, and critical speeds of discrete, continuous, and rotating systems using analytical and matrix-based numerical methods.
@@ -19,17 +20,20 @@ By the end of this course, students will be able to:
 
 ## Course Philosophy
 Rather than treating analytical theory and laboratory measurement as separate courses, ME 3330 integrates focused lab modules directly into the lecture sequence:
+
 1. **Computational Modeling (Python):** Comparing exact nonlinear D'Alembert EOMs against small-angle linearized models using `scipy.integrate.solve_ivp.`
 2. **System Identification:** Instrumenting a simple cantilevered beam with a MEMS accelerometer to extract $\omega_n$ and $\zeta$ via FFT and logarithmic decrement.
 3. **Tuned Mass Damper (TMD) Optimization:** Designing and simulating a 2-DOF vibration absorber to suppress a target resonant peak under harmonic excitation.
 4. **Experimental Modal Analysis:** Measuring multi-mode FRFs of a beam or plate using an impact hammer and accelerometer, then validating the mode shapes against analytical/numerical predictions.
 
 ## Textbooks & Software
+
 1. **Primary Textbook:** S. S. Rao, Mechanical Vibrations, 6th Edition, Pearson (2017).
 2. **Supplemental Reference:** R. R. Craig Jr. & A. J. Kurdila, Fundamentals of Structural Dynamics, 2nd Edition, Wiley (2006). (Used particularly for matrix structural dynamics, modal analysis, and experimental/computational formulations.)
 3. **Computational Environment**: Python 3 (numpy, scipy, matplotlib) via Jupyter/Quarto.
 
 ## Grading and Assessment
+
 | Component | Weight | Description |
 | :--- | :---: | :--- |
 | **Homework Problem Sets** | 25% | Weekly sets combining analytical derivations with conceptual/physical diagnostic questions. |
@@ -38,6 +42,7 @@ Rather than treating analytical theory and laboratory measurement as separate co
 | **Final Project** | 20% | Capstone vibration analysis of a real mechanical assembly|
 
 ## Course Schedule (15-week)
+
 | Week | Module / Topic | Readings | Lab / Milestone |
 | :---: | :--- | :--- | :--- |
 | **1** | **Introduction to Vibrations:** Classification of vibrations, harmonic motion, complex notation, equivalent springs & dampers. | Rao Ch. 1; Craig Ch. 1 | Python environment setup |

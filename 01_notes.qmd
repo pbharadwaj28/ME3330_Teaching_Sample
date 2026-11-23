@@ -31,6 +31,7 @@ $$
 $$
 
 Here, we define two fictitious—yet mathematically exact—quantities:
+
 1. Inertial Force: $\mathbf{F}_I = -m\mathbf{a}_G$, acting at the center of mass $G$ in the direction opposite to the assumed positive acceleration $\mathbf{a}_G$.
 2. Inertial Couple: $\mathbf{M}_I = -I_G\boldsymbol{\alpha}$, acting in the direction opposite to the assumed positive angular acceleration $\boldsymbol{\alpha}$.
 
@@ -55,6 +56,7 @@ Assume a positive clockwise rotation $\theta$ (with angular velocity $\dot{\thet
 
 ### Step 3: D'Alembert Dynamic Equilibrium about Pivot $O$
 On our dynamic FBD, we draw:
+
 1. The spring restoring force $F_s = k y_a$ pushing upward (opposing clockwise rotation)
 2. The damper force $F_d = c \dot{y}_b$ pushing upward (opposing clockwise velocity).
 3. The external tip force $F(t)$ pushing downward (aiding clockwise rotation).
